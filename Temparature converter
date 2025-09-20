@@ -1,0 +1,165 @@
+// Online C# Editor for free
+// Write, Edit and Run your C# code using C# Online Compiler
+
+using System;
+
+public class HelloWorld
+{
+    public static void Main(string[] args)
+    {
+         
+        Console.WriteLine();
+      /*  Console.WriteLine ("Try programiz.pro");
+        Console.WriteLine(add(2,3));
+        */
+        //Console.WriteLine(add(2,3,4));
+        Temparature t=new Temparature(For:"car temp");
+         Console.WriteLine(Temparature.ToKelvin(t));
+         t.unit='K';
+        Console.WriteLine(Temparature.ToCelsius(t));
+        Console.WriteLine(Temparature.ToFahrenheit(t));
+        /* Console.WriteLine(t.unit);
+        t.inputTemparature();
+        Console.WriteLine(t.getStr());
+        Console.WriteLine(t.measurement+"  "+t.unit);
+          Console.WriteLine(Temparature.ToKelvin(23.5F,'C'));
+        Console.WriteLine(Temparature.ToKelvin(23.78F,'F'));
+        Console.WriteLine(Temparature.ToCelsius(233.32F,'F'));
+        Console.WriteLine(Temparature.ToCelsius(500.0F,'K'));
+         Console.WriteLine(Temparature.ToFahrenheit(322.3F,'C'));
+        Console.WriteLine(Temparature.ToFahrenheit(322.3F,'K'));
+      
+          */
+      
+      //  Console.WriteLine(t._5by9);
+      //  Console.WriteLine(t._32);
+    }
+
+}
+
+class Temparature
+{
+    public float measurement;
+    public char unit;
+    
+    const float kUnit=273.15F,_5by9=(float)(5)/9;
+    const float _32=32.0F;
+    
+    public Temparature(float measurement,char unit)
+    {
+        this.measurement=measurement;
+        this.unit=unit;
+    }
+    
+    public Temparature(string For=""){
+        For=((For=="")?"":"for "+For);
+    inputValidator(For,this);
+       // inputTemparature(For);
+    }
+    public static bool inputValidator(string For,Temparature obj){
+        // char indicates temparature char ,e=exceptin
+        try{
+            obj.inputTemparature(For);
+        }
+        catch (FormatException e){
+            if(obj.measurement==0 && obj.unit!='\0'){ // more than one char
+                Console.WriteLine("Invalid input:Only one char allowed for unit mention");
+Console.WriteLine("for instructions type number\"11\" ");
+               reInput(For,obj);
+            }
+        }
+        catch (Exception e){
+            Console.WriteLine(e);
+        }
+        obj.unit=char.ToUpper(obj.unit); //no  safe attribute
+        if(char.IsDigit(obj.unit)){
+            Console.WriteLine(obj.measurement);
+            if(obj.measurement!=1){
+                Console.WriteLine("Invalid Input : Unit not mentioned");}
+            else printInstruction();
+        }
+        else if(obj.unit!='K' && obj.unit!='F' && obj.unit!='C' ){
+            Console.WriteLine("Invalid Input: Invalid unit");
+        }
+        else{
+            return true;
+        }
+        reInput(For,obj);
+        // lowercase char => no e
+        // char is not k,f,c
+        // not a num => Frmt e
+        // has multiple char => FormatException
+        // has no char => means last char num
+        return false;
+    }
+    public static void printInstruction(){
+        Console.WriteLine("\nWelcome user! \nValid inputs for Temparature converter:");
+        Console.WriteLine("\t1.temparature units: K-kelvin ,F-Fahren heit, C-celsius");
+        Console.WriteLine("\t2.temparature units:K,F,C mentioned at last char, eg:96.55C");
+        Console.WriteLine("\nonly accept input in this format! thank you!\n");
+    }
+    public static void reInput(string For,Temparature obj){
+         inputValidator(For,obj);
+    }
+    public void inputTemparature(string For="")
+    {
+        Console.WriteLine($"Enter Temparature {For}:");
+        string temp=Console.ReadLine();
+        unit=(char)temp[temp.Length-1];
+        measurement=(float)Convert.ToDecimal(temp.Substring(0,temp.Length-1));
+    }
+    
+    public String getStr()
+    {
+        return measurement.ToString()+unit.ToString();
+    }
+   
+    public static float ToKelvin(float measure,char unit)
+    {
+        if(unit=='C'){
+           return measure+kUnit;
+        }
+        else if(unit=='F'){
+         return ToCelsius(measure,unit)+kUnit;   
+        }
+        else{
+            Console.WriteLine("invalid or not conversion available");
+            return (float)(~0);
+        }
+            return (float)(~0);
+    }
+    
+    public static float ToKelvin(Temparature t)
+    {
+        return ToKelvin(t.measurement,t.unit);
+    }
+    
+    public static float ToCelsius(float measure,char unit){
+        switch(unit){
+            case 'F':
+           // Console.WriteLine(_5by9); used this and found (float)(5/9) is 0
+            return (measure-_32)*_5by9;
+            case 'K':
+            return measure-kUnit;
+            default:
+            Console.WriteLine("invalid or not conversion available");
+            return (float)(~0);
+        }
+             return (float)(~0);
+    }
+    
+    public static float ToCelsius(Temparature t)
+    {
+       return  ToCelsius(t.measurement,t.unit);
+    }
+    
+    public static float ToFahrenheit(float measure,char unit){
+        if(unit=='C') return (measure*(1/_5by9))+_32; // 1/5by9 == 9/5
+        else if(unit=='K') return (measure-kUnit)*(1/_5by9)+_32;
+             return (float)(~0);
+    }
+    
+    public static float ToFahrenheit(Temparature t){
+        return ToFahrenheit(t.measurement,t.unit);
+    }
+}

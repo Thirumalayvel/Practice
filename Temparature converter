@@ -1,6 +1,9 @@
 // Online C# Editor for free
 // Write, Edit and Run your C# code using C# Online Compiler
 
+// Online C# Editor for free
+// Write, Edit and Run your C# code using C# Online Compiler
+
 using System;
 
 public class HelloWorld
@@ -13,11 +16,11 @@ public class HelloWorld
         Console.WriteLine(add(2,3));
         */
         //Console.WriteLine(add(2,3,4));
-        Temparature t=new Temparature(For:"car temp");
-         Console.WriteLine(Temparature.ToKelvin(t));
-         t.unit='K';
-        Console.WriteLine(Temparature.ToCelsius(t));
-        Console.WriteLine(Temparature.ToFahrenheit(t));
+        Temparature t=new Temparature(For:"Room temp");
+         //Console.WriteLine("given temparature to kelvin:"+Temparature.ToKelvin(t));
+        // t.unit='K';
+        Console.WriteLine("kelvin to celcius:"+Temparature.ToCelsius(t));
+        Console.WriteLine("kelvin to Fahrenheit:"+Temparature.ToFahrenheit(t));
         /* Console.WriteLine(t.unit);
         t.inputTemparature();
         Console.WriteLine(t.getStr());
@@ -55,6 +58,18 @@ class Temparature
         For=((For=="")?"":"for "+For);
     inputValidator(For,this);
        // inputTemparature(For);
+    }
+    
+    public void ConversionWindow(){
+        Console.WriteLine("Enter measurement of Temparature:");
+        this.measurement=(decimal)Console.ReadLine();
+        Console.WriteLine("Select the unit:\t\na.Kelvin\t\nb.Celsius");
+        Console.WriteLine("\tc.Fahrenheit\nEnter the option:");
+        char ch=Console.ReadLine();
+        switch(ch){
+            case 'a':
+            
+        }
     }
     public static bool inputValidator(string For,Temparature obj){
         // char indicates temparature char ,e=exceptin

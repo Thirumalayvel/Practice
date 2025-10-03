@@ -15,13 +15,6 @@ let random=Math.random();
 */
 }
 
-inputs=[1,2,3,4,5,6,7,8,9,10];
-for(let i=9;i>-1;i--){
-    for(let j=1;j<11;j++){
-       out("num:"+i+" "+randomIndex(inputs,i));
-    }
-    out("/n");
-}
 
 class xoElement{
     constructor(row,column){
@@ -34,6 +27,19 @@ function twoIndexExcept(index){
     else if(index==1) return [0,2];
     else return [0,1];
 }
+
+function balanceOneIndex(index1,index2){
+    let indexSum=3; //0+1+2=3
+    return indexSum-(index1+index2);
+}
+function isIN_rlDaignol(xoObj){
+   // out("from isin rl:"+((xoObj.row+xoObj.column)==2));
+    //out(xoObj);
+    return ((xoObj.row+xoObj.column)==2);
+}
+function isIN_lrDaignol(xoObj){
+    return (xoObj.row==xoObj.column);
+}
 function findWinIndex(myMoves,opponentMoves){
     let opsRows=[],opsColumns=[]; // to note filled opponents rows and columns
     for(let i=0;i<opponentMoves.length;i++){   
@@ -45,8 +51,32 @@ function findWinIndex(myMoves,opponentMoves){
         if(myMoves[i1].row==myMoves[i2].row && !opsRows.includes(myMoves[i1].row)) return true;
         else false;
     }
-    console.log(slidingWindowLoop(rowFinder,myMoves));
+    let columnFinder=(i1,i2)=>{
+        if(myMoves[i1].column==myMoves[i2].column && !opsColumns.includes(myMoves[i1].column)) return true;
+        else false;
+    }
+    let rlDaignal=(i1,i2)=>{
+        if(isIN_rlDaignol(myMoves[i1]) && isIN_rlDaignol(myMoves[i2])){
+            let balanceRow=balanceOneIndex(myMoves[i1].row,myMoves[i2].row); 
+            let balanceColumn=balanceOneIndex(myMoves[i1].column,myMoves[i2].column);
+            let target=new xoElement(balanceRow,balanceColumn);
+            if(!checkIndexMarked(target,opponentMoves)) return true;
+            else false;
+        }
+       
+    }
+    console.log("row:"+slidingWindowLoop(rowFinder,myMoves));
+    out("column:"+slidingWindowLoop(columnFinder,myMoves));
+    out("rl daignal"+slidingWindowLoop(rlDaignal,myMoves));
 }
+
+function checkIndexMarked(target,opponentMoves){
+    for(let i=0;i<opponentMoves.length;i++){
+        if(target.row==opponentMoves.row && target.column==opponentMoves.column) return true;
+    }
+    return false;
+}
+
 function slidingWindowLoop(logicFunction,arrayObjects){
     for(let i=1;i<arrayObjects.length;i++){
         for(let j=i;j<arrayObjects.length;j++){
@@ -67,9 +97,9 @@ function findChances(selectedMove,myMoves,opponentMoves){
 function out(x){
     console.log(x);
 }
-out(twoIndexExcept(0));
-out(twoIndexExcept(1));
-out(twoIndexExcept(2) );
+//out(twoIndexExcept(0));
+//out(twoIndexExcept(1));
+//out(twoIndexExcept(2) );
 
 let myMoves=[
     new xoElement(0,0),
@@ -82,6 +112,19 @@ let opponentMoves=[
 ];
 findWinIndex(myMoves,opponentMoves);
 opponentMoves[1]=new xoElement(2,1);
+findWinIndex(myMoves,opponentMoves);
+// check daignal
+
+opponentMoves[0]=new xoElement(1,2);
+myMoves[2]=new xoElement(0,2);
+out("my move");
+for(let i=0;i<myMoves.length;i++){
+    out(myMoves[i]);
+}
+out("oppo moves:");
+for(let i=0;i<opponentMoves.length;i++){
+    out(opponentMoves[i]);
+}
 findWinIndex(myMoves,opponentMoves);
 
 
@@ -96,6 +139,15 @@ findWinIndex(myMoves,opponentMoves);
 
 /* 
 tested code
+
+inputs=[1,2,3,4,5,6,7,8,9,10];
+for(let i=9;i>-1;i--){
+    for(let j=1;j<11;j++){
+       out("num:"+i+" "+randomIndex(inputs,i));
+    }
+    out("/n");
+}
+
 
 for(let i=1;i<=5;i++)
 {

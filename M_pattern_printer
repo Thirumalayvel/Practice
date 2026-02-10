@@ -1,0 +1,37 @@
+// print M pattern using *(hastrieck) . get height of M from user .Expected input for height, input>3 and input is odd number.
+/*
+Enter a number:5
+*       * 
+* *   * * 
+*   *   * 
+*       * 
+*       * 
+*/
+
+import java.util.Scanner;
+class Main {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        System.out.println();
+        System.out.println("Enter a number:");
+        int n=sc.nextInt();
+        int halfHeight=(n/2)+1;
+      //  System.out.println("half height:"+halfHeight);
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=n;j++){
+                // int ijDistance=i-1;
+                // System.out.println("i,j,ijDistance:"+i+" "+j+" "+ijDistance);
+                if(j==1||j==n ){
+                    System.out.print("* ");
+                }
+                else if(i<=halfHeight && (i==j || n-j==i-1)){
+                    System.out.print("* ");
+                }
+                else{
+                    System.out.print("  ");
+                }
+            }
+          System.out.println();  
+        }
+    }
+}
